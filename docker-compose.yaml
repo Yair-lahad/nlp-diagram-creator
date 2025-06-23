@@ -7,3 +7,7 @@ services:
       - "8000:8000"
     volumes:
       - ./app:/code/app
+    environment:
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+    env_file:
+      - .env
