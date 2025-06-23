@@ -6,18 +6,12 @@ import uuid
 from pathlib import Path
 from typing import List
 import importlib
-from app.core.models import Node, Connection
+from app.core.models import Node, Connection, NODE_MAPPINGS
 from diagrams import Diagram, Cluster
 
 
 class DiagramTools:
     """Diagram tools for creating and rendering diagrams"""
-
-    NODE_MAPPINGS = {
-        "ec2": ("diagrams.aws.compute", "EC2"),
-        "rds": ("diagrams.aws.database", "RDS"),
-        "elb": ("diagrams.aws.network", "ELB")
-    }
 
     def __init__(self):
         self.output_dir = Path("outputs")
@@ -25,9 +19,10 @@ class DiagramTools:
 
     def create_node(self, name: str, node_type: str, cluster: str = None) -> Node:
         """Create a node - returns node object"""
-        if node_type not in self.NODE_MAPPINGS:
-            raise ValueError(f"Unsupported node type: {node_type}")
-
+        if node_type not in NODE_MAPPINGS:
+            supported = ", ".join(NODE_MAPPINGS.keys())
+            raise ValueError(f"Unsupported node type: '{node_type}'. Allowed types: {supported}. "
+                             "If this is a conceptual name (e.g., 'microservice'), use it as a 'cluster' name instead.")
         return Node(name, node_type, cluster)
 
     def connect_nodes(self, from_node: str, to_node: str) -> Connection:
@@ -73,7 +68,7 @@ class DiagramTools:
 
     def _create_diagram_node(self, node: Node):
         """Create actual diagram node object"""
-        module_name, class_name = self.NODE_MAPPINGS[node.node_type]
+        module_name, class_name = NODE_MAPPINGS[node.node_type]
         module = importlib.import_module(module_name)
         node_class = getattr(module, class_name)
         return node_class(node.name)

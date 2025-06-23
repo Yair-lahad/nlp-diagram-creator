@@ -6,7 +6,7 @@ structured data that can be processed by the tools.
 """
 
 import json
-from typing import List, Dict, Any
+from typing import List
 from app.core.models import LLMResponse, ToolCall
 
 
@@ -69,14 +69,3 @@ class LLMOutputParser:
             cleaned = cleaned[start_idx:end_idx + 1]
         return cleaned.strip()
 
-    @staticmethod
-    def validate_tool_call(tool_call: ToolCall, available_tools: List[str]) -> bool:
-        """
-        Validate that a tool call uses an available tool.
-        Args:
-            tool_call: Tool call to validate
-            available_tools: List of available tool names
-        Returns:
-            True if valid, False otherwise
-        """
-        return tool_call.tool in available_tools

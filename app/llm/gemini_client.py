@@ -13,11 +13,17 @@ class GeminiClient(BaseLLMClient):
         )
 
     async def generate_response(self, prompt: str) -> str:
+        """
+        generate_response method for Gemini LLM client.
+        simply sends the prompt to the Gemini API
+        and returns the generated text response.
+        
+        """
         payload = {
             "contents": [{"role": "user", "parts": [{"text": prompt}]}],
             "generationConfig": {
                 "temperature": 0.1,
-                "maxOutputTokens": 1000,
+                "maxOutputTokens": 2048,
             },
         }
 
