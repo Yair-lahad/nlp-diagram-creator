@@ -1,0 +1,10 @@
+[project]
+name = "diagram-agent"
+dependencies = [
+  "fastapi",
+  "uvicorn[standard]",
+  "pydantic",
+]
+
+[tool.uv]
+virtualenvs.in-project = true
