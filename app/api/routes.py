@@ -1,16 +1,26 @@
+"""
+API routes for diagram generation.
+
+Handles incoming HTTP requests and routes them through the dispatcher
+to appropriate agent handlers.
+"""
+
 from fastapi import APIRouter, HTTPException
-from pydantic import BaseModel
-from app.agent.diagram_agent import handle_diagram_request
+from app.core.models import DiagramRequest
+from app.core.dispatcher import dispatcher
 
 router = APIRouter()
 
-class DiagramRequest(BaseModel):
-    description: str
-
-@router.post("/")
+@router.post("/diagram")
 async def create_diagram(request: DiagramRequest):
+    """
+    Generate diagram from natural language description.
+    
+    Takes a text description and returns a diagram image through
+    the LLM agent pipeline.
+    """
     try:
-        result = await handle_diagram_request(request.description)
+        result = await dispatcher.dispatch("diagram", request.description)
         return {"result": result}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
