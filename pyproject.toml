@@ -8,5 +8,5 @@ dependencies = [
     "pydantic",
     "httpx",
     "diagrams",
-     "python-dotenv",
+    "python-dotenv",
 ]

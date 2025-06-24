@@ -166,4 +166,5 @@ curl -X POST "http://localhost:8000/diagram" -H "Content-Type: application/json"
 - Currently supports AWS infrastructure components only
 - Requires active internet connection for LLM API calls
 - Generated diagrams are temporary files
+- Further testing and error handling can be added as project grows
 
