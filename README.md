@@ -64,7 +64,8 @@ Curl will save an output "diagram.png" file to your local code directory.
 
 **Expected Output**: The API returns a PNG image showing the architecture diagram with AWS icons and proper connections, similar to this:
 
-![Example Output](https://raw.githubusercontent.com/Yair-lahad/nlp-diagram-creator/main/example-output.png)
+![image](https://github.com/user-attachments/assets/2ce96bd8-ccc0-459e-8082-696328e231d2)
+
 
 ## Architecture
 
