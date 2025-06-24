@@ -1,17 +1,18 @@
 FROM python:3.12-slim
 
-# Set working directory
-WORKDIR /code
+WORKDIR /app
 
-# Install system dependencies
-RUN apt-get update && apt-get install -y graphviz && apt-get clean
+# Install Graphviz (required for diagrams package)
+RUN apt-get update && apt-get install -y graphviz && rm -rf /var/lib/apt/lists/*
 
-# Install Python dependencies
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install uv
 
-# Copy app code
-COPY app ./app
+COPY pyproject.toml uv.lock* ./
 
-# Run Uvicorn
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+RUN uv sync --frozen
+
+COPY . .
+
+EXPOSE 8000
+
+CMD ["uv", "run", "uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
