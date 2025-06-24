@@ -55,7 +55,7 @@ Send a POST request to `/diagram` with a natural language description input:
 ```
 Postman will generate a preview output that matches the expected PNG below, with the possibility to download it.
 
-**Using curl**:
+**Using curl on another Terminal window on project directory**:
 ```bash
 curl -X POST "http://localhost:8000/diagram" -H "Content-Type: application/json" -d "{\"description\": \"Create a diagram showing a basic web application with an Application Load Balancer, two EC2 instances for the web servers, and an RDS database for storage. The web servers should be in a cluster named Web Tier.\"}" --output diagram.png
 ```
